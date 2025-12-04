@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Demografische Angaben - Studie</title>
+       
+        <!-- Responsive Web-Design: Zoom 100% zu Beginn + Breite = Bildschirmbreite
+        des Geräts: -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Zentrale CSS-Datei einbinden -->
+        <link rel="stylesheet" href="styles.css"
+    </head>
+
+    <body class="light"> 
+        <!-- Hauptcontainer für den Seiteninhalt -->
+        <main class="page-container">
+
+        <!-- Überschrift der Seite -->
+         <h1>Demografische Angaben</h1>
+
+        <!-- Kurze Erklärung zum Zweck der Fragen -->
+         <p>Bitte beantworten Sie die folgenden Fragen. Ihre Angaben werden anonym erhoben und ausschließlich für die Auswertung dieser Studie verwendet.<br>
+         Damit wir die Ergebnisse korrekt auswerten können, ist ein vollständiges Bearbeiten aller Fragen erfoderlich.</p>
+
+        <!-- Formular, das alle Demografie-Eingaben enthält -->
+        <form id="demoForm">
+
+            <!-- 1. Geschlecht (Einfachauswahl) -->
+             <section class="question-group">
+                <h2>1. Mit welchem Geschlecht identifizieren Sie sich?</h2>
+
+                <!-- Radio-Buttons ermöglichen die Auswahl von nur einer Möglichkeit -->
+                 <label>
+                    <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    required
+                    >
+                    Männlich
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    >
+                    Weiblich
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="gender"
+                    value="diverse"
+                    >
+                    Divers
+                 </label>
+             </section>
+
+             <!-- 2. Alter (Altersgruppe, Einfachauswahl) -->
+              <selection class="question-group">
+                <h2>2. Zu welcher Altersgruppe gehören Sie?</h2>
+
+                <!-- Radio-Buttons für Einfachauswahl -->
+                 <label>
+                    <input
+                    type="radio"
+                    name="ageGroup"
+                    value="0-17"
+                    required
+                    >
+                    0-17 Jahre
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="ageGroup"
+                    value="18-25"
+                    >
+                    18-25 Jahre
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="ageGroup"
+                    value="26-35"
+                    >
+                    26-35 Jahre
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="ageGroup"
+                    value="36-45"
+                    >
+                    36-45 Jahre
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="ageGroup"
+                    value="46-55"
+                    >
+                    46-55 Jahre
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="ageGroup"
+                    value="56+"
+                    >
+                    56 Jahre und älter
+                 </label>
+              </selection>
+
+              <!-- 3. Sehstatus / Augenkrankheiten (Mehrfachauswahl) -->
+               <selection class="question-group">
+                <h2>3. Wie ist der Status Ihrer Augen?</h2>
+                <p>Mehrfachauswahl möglich.</p>
+
+                <!-- Jeder Checkbox-Eintrag kann unabhängig von den anderen angeklickt werden. -->
+                 <label>
+                    <input
+                    type="checkbox"
+                    name="vision"
+                    value="normal"
+                    >
+                    Normale Sehkraft
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="checkbox"
+                    name="vision"
+                    value="glasses"
+                    >
+                    Brille/Kontaktlinsen
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="checkbox"
+                    name="vision"
+                    value="disease"
+                    >
+                    Bekannte Augenerkrankung
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="checkbox"
+                    name="vision"
+                    value="astigmatism"
+                    >
+                    Bekannte Hornhautverkrümmung (Astigmatismus)
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="checkbox"
+                    name="vision"
+                    value="color_vision"
+                    >
+                    Farbsinnstörung (bspw. Rot-Grün-Schwäche)
+                 </label>
+               </selection>
+               
+               <!-- 4. Persönliche Präferenz (Modus + Begründung) -->
+               <section class="question-group">
+                <h2>4. Was ist Ihre persönliche Präferenz?</h2>
+
+                <!-- Satz mit Auswahlfeld für den Modus + Textfeld für die Begründung -->
+                 <p>
+                    Ich nutze bevorzugt
+                    <select id="prefMode" name="prefMode" required>
+                        <!-- Leere Option zwingt zur aktiven Auswahl -->
+                         <option value="">Bitte auswählen</option>
+                         <option value="light">den Light Mode</option>
+                         <option value="dark">den Dark Mode</option>
+                    </select>
+                    , weil 
+                 </p>
+
+                 <!-- Freitextbegründung -->
+                  <textarea
+                  id="prefReason"
+                  name="prefReason"
+                  rows="3"
+                  placeholder="Bitte geben Sie kurz Ihre Begründung an."
+                  required
+                  ></textarea>
+               </section>
+
+               <!-- 5. Studienfach / beruflicher Hintergrund -->
+                <section class="question-group">
+                    <h2>5. Was studieren Sie?/<br>Was ist Ihr beruflicher Hintergrund?</h2>
+                    
+                    <!-- einfaches Texteingabefeld -->
+                     <input
+                        type="text"
+                        id="background"
+                        name="background"
+                        placeholder="z.&nbsp;B. Informatik, Psychologie, kaufmännischer Beruf ..."
+                        required
+                     >
+                </section>
+
+                <!-- 6. tägliche Bildschirmzeit (Einfachauswahl) -->
+                 <section class="question-group">
+                    <h2>6. Wie hoch ist Ihre tägliche Bildschirmzeit?</h2>
+
+                    <!-- Kategorien als Radio-Buttons -->
+                     <label>
+                        <input
+                            type="radio"
+                            name="screenTime"
+                            value="0-2"
+                            required
+                        >
+                        0-2 Stunden
+                     </label><br>
+
+                     <label>
+                        <input
+                            type="radio"
+                            name="screenTime"
+                            value="2-4"
+                        >
+                        2-4 Stunden
+                     </label><br>
+
+                     <label>
+                        <input
+                            type="radio"
+                            name="screenTime"
+                            value="4-6"
+                        >
+                        4-6 Stunden
+                     </label><br>
+
+                     <label>
+                        <input
+                            type="radio"
+                            name="screenTime"
+                            value="6-8"
+                        >
+                        6-8 Stunden
+                     </label><br>
+
+                     <label>
+                        <input
+                            type="radio"
+                            name="screenTime"
+                            value="8+"
+                        >
+                        8 Stunden oder mehr
+                     </label>
+                 </section>
+
+                 <!-- 7. Häufig verwendete Geräte (Mehrfachauswahl) -->
+                  <section class="question-group">
+                    <h2>7. Welche der folgenden Geräte verwenden Sie am häufigsten?</h2>
+                    <p>Mehrfachauswahl möglich.</p>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="device"
+                            value="smartphone"
+                        >
+                        Smartphone
+                    </label><br>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="device"
+                            value="tablet"
+                        >
+                        Tablet
+                    </label><br>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="device"
+                            value="laptop"
+                        >
+                        Laptop/MacBook
+                    </label><br>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="device"
+                            value="pc"
+                        >
+                        PC/Desktop-Computer
+                    </label><br>
+                  </section>
+
+                  <!-- 8. Gerät, mit dem an der Umfrage teilgenommen wird (Einfachauswahl) -->
+                   <section class="question-group">
+                   <h2>8. Mit welchem Gerätetyp nehmen Sie an dieser Umfrage teil?</h2>
+
+                  <!-- Radio-Buttons für Einfachauswahl -->
+                   <label>
+                    <input
+                        type="radio"
+                        name="currentDevice"
+                        value="smartphone"
+                        required
+                    >
+                    Smartphone
+                   </label><br>
+
+                    <label>
+                    <input
+                        type="radio"
+                        name="currentDevice"
+                        value="tablet"
+                    >
+                    Tablet
+                   </label><br>
+
+                   <label>
+                    <input
+                        type="radio"
+                        name="currentDevice"
+                        value="laptop"
+                    >
+                    Laptop/MacBook
+                   </label><br>
+
+                   <label>
+                    <input
+                        type="radio"
+                        name="currentDevice"
+                        value="pc"
+                    >
+                    PC/Desktop-Computer
+                   </label><br>
+
+                  </section>
+
+                  <p class="time-hint">
+               Hinweis: Auf den folgenden beiden Seiten bearbeiten Sie die Aufgaben dieser Studie. Dabei wird jeweils Ihre Bearbeitungszeit gemessen. Bitte bearbeiten Sie die Aufgaben konzentriert am Stück, ohne zu hetzen. 
+               </p>
+
+                  <!-- Weiter-Button zur Light-Mode-Aufgabe -->
+                <div class="button-container">
+                    <!-- type="button, damit nicht automatisch abgeschickt wird" -->
+                     <button type="button" id="demoNextButton">
+                        Weiter zur Aufgabe
+                     </button>
+                </div>
+
+            </form>
+
+        </main>
+        <!-- Zentrales JS einbinden -->
+         <script src="script.js"></script>
+    </body>
+</html>

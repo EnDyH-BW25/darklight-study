@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Einführung in unsere Studie</title>
+       
+        <!-- Responsive Web-Design: Zoom 100% zu Beginn + Breite = Bildschirmbreite
+        des Geräts: -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Zentrale CSS-Datei einbinden -->
+        <link rel="stylesheet" href="styles.css"
+    </head>
+
+    <body class="light"> <!-- Ab jetzt kommt der Inhalt der Seite -->
+
+        <h1>Herzlich Willkommen zu unserer Studie zur Wahrnehmung von Bildschirmdarstellungsformen!</h1>
+
+        <h2>Vorwort</h2>
+        <p>Hallo, wir sind eine Gruppe von Studierenden der DHBW Mosbach und beschäftigen uns im Rahmen unseres Praxisprojekts mit den Bildschirmdarstellungsformen Dark und Lightmode.<br><br>
+        In dieser Studie bearbeiten Sie kurze Wahrnehmungsaufgaben und beantworten einige Fragen zur Darstellung von Informationen. Die Teilnahme wird 10-15 Minuten Ihrer Zeit in Anspruch nehmen und ist freiwillig.<br><br>
+        Mit Ihrer Teilnahme helfen Sie uns, mehr darüber herauszufinden, wann Light und Darkmode jeweils sinnvoll sind.</p>
+
+        <h2>Datenschutz</h2>
+        <p>Es werden keine namen, E-Mail- oder IP-Adressen gespeichert.<br>
+        Alle Daten werden anonym erhoben und ausschließlich für wissenschaftliche Zwecke verwendet.<br>
+        Die Daten werden nicht an Dritte weitergegeben.</p>
+
+        <form id="consentForm">
+        <!-- Checkbox Datenschutzinformationen -->
+         <div class="consent-container">
+            <label>
+                <!-- Checkbox zur Zustimmung -->
+                 <input type="checkbox" id="consentCheckbox">
+
+                 <!-- Text neben der Checkbox -->
+                  Ich habe die Datenschutzinformationen gelesen und stimme der anonymen Verarbeitung meiner Daten im Zuge meiner Teilnahme an der Studie für wissenschaftliche Zwecke zu. 
+            </label>
+        </div>
+
+        <!-- Start-Button -->
+         <div class="button-container">
+            <!-- Der Button ist anfangs deaktiviert (disbled), 
+             damit niemand ohne Zustimmung starten kann.-->
+             <button type="button" id="startButton" disabled>
+                Studie starten
+             </button>
+         </div>
+        
+        </form>
+
+        <!-- Zentrales JS einbinden -->
+         <script src="script.js"></script>
+    </body>
+</html>

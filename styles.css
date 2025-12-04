@@ -1,0 +1,183 @@
+/* ----------------------------- */
+/* Allgemeines */
+/* ----------------------------- */
+
+/* Globale Schrift für die gesamte Seite */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif; 
+}
+
+/* Abstand für den Button-Bereich */
+.button-container {
+    margin-top: 1.5rem;
+}
+
+
+
+/* ----------------------------- */
+/* Start-Seite */
+/* ----------------------------- */
+
+/* Grunddesign des Start-Buttons */
+#startButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    opacity: 0.6;           /* Button wirkt grau/ deaktiviert */
+    border: none; 
+    border-radius: 6px;
+}
+
+/* Design, wenn der Button aktiviert ist */
+#startButton:enabled {
+    cursor: pointer;    /* Mauszeiger ändert sich */
+    opacity: 1;         /* Button ist voll sichtbar */
+}
+
+
+
+/* ----------------------------- */
+/* Demo-Seite*/
+/* ----------------------------- */
+
+/* Container für die Checkbox */
+.consent-container{
+    margin-top: 2rem; 
+    font-size: 1rem;
+}
+
+/* Allgemeiner Container für Seiteninhalte */
+.page-container {
+    max-width: 800px;   /* begrenzt Zeilenbreite */
+    margin: 2rem auto;  /* zentriert den Inhalt */
+    padding: 0 1rem;    /* Abstand zum Rand */
+}
+
+/* Abstand zwischen den Fragen */
+.question-group {
+    margin-top: 1.8rem; 
+}
+
+/* Überschriften der Fragen etwas kleiner als h1 */
+.question-group h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+} 
+
+/* Textfelder und Textareas im Formular */
+.question-group input[type="text"], 
+.question-group input [type="number"],
+.question-group textarea, 
+.question-group select {
+    margin-top: 0.3rem;
+    padding: 0.35rem 0.4rem;
+    font-size: 1rem;
+}
+
+/* Textarea soll die ganze Breite nutzen */
+.question-group textarea {
+    width: 100%;
+    resize: vertical;   /* Höhe anpassbar, aber nicht Breite */
+}
+
+/* Button-Bereich (same as index.html) */
+.button-container {
+    margin-top: 2rem;
+}
+
+/* Allg. Button-Desgin (kann für alle Buttons gelten) */
+button {
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.6; /* Button wird leicht heller */
+}
+
+/* Wichtiger Hinweis zur Zeitmessung */
+.time-hint {
+    font-size: 0.9rem;
+    color: #b22222;
+    background-color: #fff3cd;
+    border-left: 4px solid #b22222;
+    padding: 0.8rem 1rem;
+    margin-top: 2rem;
+    border-radius: 4px;
+}
+
+
+
+/* ----------------------------- */
+/* Light-Mode-Seite */
+/* ----------------------------- */
+
+/* verschmilzt doppelte Linien zwischen Zellen miteinander */
+table {
+    border-collapse: collapse;
+}
+
+/* Trennt alle Zellen durch Linien */
+td, th {
+    border: 1px solid black;
+    padding: 0.3rem; /* Abstand zw. Text & Zellenrand */
+}
+
+/* Überschrift über der Tabelle */
+.task-title {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Aufgabenstellung */
+.task-instruction {
+  font-weight: 500;     
+  margin-bottom: 1.5rem;
+}
+
+
+
+/* ----------------------------- */
+/* Dark-Mode-Seite */
+/* ----------------------------- */
+
+/* Textfarbe innerhalb der Tabelle ist weiß, Hintergrundfarbe ist 
+dunkles Grau */
+body.dark table {
+    color: #ffffff; 
+    background-color: #121212;
+}
+
+/* Hervorhebung der Tabellenüberschriften: fett
++ linksbündig gesetzt */
+th {
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Hintergrundfarbe Tabellenüberschriften etwas heller => hebt sich ab */
+body.dark th {
+    background-color: #2a2a2a;
+}
+
+td {
+    text-align: left;
+}
+
+/* Farbe Tabellenrahmen: helleres Grau (Sichtbarkeit, ohne Hervorhebung) */
+body.dark td {
+    border-color: #555;
+}
+
+/* optional für bessere Sichtbarkeit: Hintergrundfarbe jeder zweiten
+Zeile etwas heller => visuelle Abwechslung
+body-dark tbody tr:nth-child(even) {
+    background-color: #1c1c1c; 
+} */
+
+
+/* ----------------------------- */
+/* Abschluss-Seite */
+/* ----------------------------- */
