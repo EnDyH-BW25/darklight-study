@@ -143,11 +143,31 @@ td, th {
 /* Dark-Mode-Seite */
 /* ----------------------------- */
 
+/* Globaler Darkmode für die gesamte Seite */
+body.dark {
+    background-color: #121212;
+    color: #f5f5f5;
+}
+
 /* Textfarbe innerhalb der Tabelle ist weiß, Hintergrundfarbe ist 
 dunkles Grau */
 body.dark table {
     color: #ffffff; 
     background-color: #121212;
+}
+
+/* Hintergrundfarbe Tabellenüberschriften etwas heller => hebt sich ab */
+body.dark th {
+    background-color: #2a2a2a;
+}
+
+/* Farbe Tabellenrahmen: helleres Grau (Sichtbarkeit, ohne Hervorhebung) */
+body.dark td {
+    border-color: #555;
+}
+
+td {
+    text-align: left;
 }
 
 /* Hervorhebung der Tabellenüberschriften: fett
@@ -157,25 +177,33 @@ th {
     text-align: left;
 }
 
-/* Hintergrundfarbe Tabellenüberschriften etwas heller => hebt sich ab */
-body.dark th {
-    background-color: #2a2a2a;
-}
-
-td {
-    text-align: left;
-}
-
-/* Farbe Tabellenrahmen: helleres Grau (Sichtbarkeit, ohne Hervorhebung) */
-body.dark td {
-    border-color: #555;
-}
-
 /* optional für bessere Sichtbarkeit: Hintergrundfarbe jeder zweiten
 Zeile etwas heller => visuelle Abwechslung
 body-dark tbody tr:nth-child(even) {
     background-color: #1c1c1c; 
 } */
+
+/* Eingabefelder im Dark Mode */
+body.dark input, 
+body.dark textarea,
+body.dark select {
+    background-color: #1e1e1e;  /* Dunkle Eingabefelder */
+    color: #f5f5f5;             /* Heller Text */
+    border: 1px solid #555;     /* Dezenter Rahmen */ 
+}
+
+/* Buttons im Dark Mode */
+body.dark button {
+    background-color: #2a2a2a;      /* Dunkler Button */
+    color: #f5f5f5;                 /* Helle Schriftfarbe */
+}
+
+/* Hover im Darkmode */
+body.dark button:hover {
+    background-color: #3a3a3a;  /* Etwas hellerer Button beim Hovern */
+}
+
+
 
 
 /* ----------------------------- */
