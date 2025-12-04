@@ -116,3 +116,85 @@ if (nextButtonDark) {
 // finish.html
 // ------------------------------------
 
+
+
+// ------------------------------------
+// Datenübertragung und TimeStamps
+// ------------------------------------
+
+// Automatisches Erzeugen einer Teilnehmer-ID
+if (!localStorage.getItem("participantID")) {
+    const id = "p_" + Date.now(); + "-" + Math.floor(Math.random() * 1000000);
+    localStorage.setItem("participantID", id);
+}
+
+// 9 Demo-Felder sauber speichern
+const demoForm = document.getElementById("demoForm");
+const demoNextButton = document.getElementById("demoNextButton");
+
+if (demoForm && demoNextButton) {
+    demoNextButton.addEventListener("click", function () {
+        const demoData = {
+            geschlecht: demoForm.gender.value,
+            altersgruppe: demoForm.ageGroup.value,
+
+            sehstatus: Array.from(
+                document.querySelectorAll('input[name="vision"]:checked')
+            ).map(cb => cb.value).join(", "),
+
+            praeferenzModus: demoForm.prefMode.value,
+            praeferenzBegruendung: demoForm.prefReason.value,
+
+            studienfachBeruf: demoForm.background.value,
+            bildschirmzeit: demoForm.screenTime.value,
+
+            haeufigeGeraete: Array.from(
+                document.querySelectorAll('input[name="device"]:checked')
+            ).map(cb => cb.value).join(", "),
+        
+            teilnahmeGeraet: demoForm.currentDevice.value,
+            umgebungsbeleuchtung: demoForm.lightSetting.value
+        };
+
+        localStorage.setItem("demoData", JSON.stringify(demoData));
+
+        window.location.href = "light.html";
+    });
+}
+
+// Daten bei Klick auf Dark-Weiter-Button senden
+const nextButtonDark = document.getElementById("nextButtonDark");
+
+if (nextButtonDark) {
+   const darkStart = Date.now();
+
+    nextButtonDark.addEventListener("click", function () {
+        const darkTimeMs = Date.now() - darkStart;
+        localStorage.setItem("darkTimeMs", String(darkTimeMs));
+
+        const playload = {
+            participantID: localStorage.getItem("participantID"),
+            timeLightMs: Number (localStorage.getItem("lightTimeMs")),
+            timeDarkMs: darkTimeMs,
+
+            demoData: JSON.parse(localStorage.getItem("demoData")),
+
+            answerLight: JSON.parse(localStorage.getItem("answerLight")),
+            answerDark: JSON.parse(localStorage.getItem("answerDark"))
+        };
+
+        fetch("https://script.google.com/macros/s/AKfycbwXK4HbqQQfr-1sXh0BRfEYXb6m590RLpJZXSXj2A2K7uXqk_MTwSbyiQgdt57NIQv6/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(playload)
+        })
+        .then(() => {
+            window.location.href = "finish.html";
+        })
+        .catch(() => {
+            window.location.href = "finish.html";
+        });
+    });
+}
+
+
