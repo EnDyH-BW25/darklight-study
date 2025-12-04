@@ -12,7 +12,20 @@ body {
     margin-top: 1.5rem;
 }
 
+/* Allgemeiner Container für Seiteninhalte */
+.page-container {
+    max-width: 800px;   /* begrenzt Zeilenbreite */
+    margin: 2rem auto;  /* zentriert den Inhalt */
+    padding: 0 1.5rem;    /* Abstand zum Rand */
+    box-sizing: border-box;     /* Padding in die Breite einrechnen */
+}
 
+/* Formular-Eingabefelder passen sich dem Container an */
+.page-container input, 
+.page-container textarea,
+.page-container select {
+    width: 100%;            /* Eingabefelder nutzen volle Container-Breite */
+}
 
 /* ----------------------------- */
 /* Start-Seite */
@@ -43,13 +56,6 @@ body {
 .consent-container{
     margin-top: 2rem; 
     font-size: 1rem;
-}
-
-/* Allgemeiner Container für Seiteninhalte */
-.page-container {
-    max-width: 800px;   /* begrenzt Zeilenbreite */
-    margin: 2rem auto;  /* zentriert den Inhalt */
-    padding: 0 1rem;    /* Abstand zum Rand */
 }
 
 /* Abstand zwischen den Fragen */
