@@ -125,7 +125,7 @@
               <!-- 3. Sehstatus / Augenkrankheiten (Mehrfachauswahl) -->
                <selection class="question-group">
                 <h2>3. Wie ist der Status Ihrer Augen?</h2>
-                <p>Mehrfachauswahl möglich.</p>
+                <p class="question-hint">Mehrfachauswahl möglich.</p>
 
                 <!-- Jeder Checkbox-Eintrag kann unabhängig von den anderen angeklickt werden. -->
                  <label>
@@ -184,10 +184,10 @@
                     <select id="prefMode" name="prefMode" required>
                         <!-- Leere Option zwingt zur aktiven Auswahl -->
                          <option value="">Bitte auswählen</option>
-                         <option value="light">den Light Mode</option>
-                         <option value="dark">den Dark Mode</option>
+                         <option value="light">den Light Mode,</option>
+                         <option value="dark">den Dark Mode,</option>
                     </select>
-                    , weil 
+                    weil 
                  </p>
 
                  <!-- Freitextbegründung -->
@@ -269,7 +269,7 @@
                  <!-- 7. Häufig verwendete Geräte (Mehrfachauswahl) -->
                   <section class="question-group">
                     <h2>7. Welche der folgenden Geräte verwenden Sie am häufigsten?</h2>
-                    <p>Mehrfachauswahl möglich.</p>
+                    <p class="question-hint">Mehrfachauswahl möglich.</p>
 
                     <label>
                         <input
@@ -350,6 +350,38 @@
                     PC/Desktop-Computer
                    </label><br>
 
+                   <!-- 9. Umgebungsbeleuchtung -->
+              <selection class="question-group">
+                <h2>9. Wie ist Ihre Umgebungsbeleuchtung</h2>
+
+                <!-- Radio-Buttons für Einfachauswahl -->
+                 <label>
+                    <input
+                    type="radio"
+                    name="LightSetting"
+                    value="bright"
+                    required
+                    >
+                    Hell/Tageslicht
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="LightSetting"
+                    value="dim"
+                    >
+                    Dämmerlicht
+                 </label><br>
+
+                 <label>
+                    <input
+                    type="radio"
+                    name="LightSetting"
+                    value="dark"
+                    >
+                    Dunkel/ Nacht
+                 </label><br>
                   </section>
 
                   <p class="time-hint">
@@ -367,7 +399,7 @@
             </form>
 
         </main>
-        
+
         <!-- Zentrales JS einbinden -->
          <script src="script.js"></script>
     </body>

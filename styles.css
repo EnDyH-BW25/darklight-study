@@ -16,15 +16,23 @@ body {
 .page-container {
     max-width: 800px;   /* begrenzt Zeilenbreite */
     margin: 2rem auto;  /* zentriert den Inhalt */
-    padding: 0 1.5rem;    /* Abstand zum Rand */
+    padding: 0 0.6rem;    /* Abstand zum Rand */
     box-sizing: border-box;     /* Padding in die Breite einrechnen */
 }
 
 /* Formular-Eingabefelder passen sich dem Container an */
-.page-container input, 
+.page-container input[type="text"], 
+.page-container input[type="number"],
+.page-container input[type="email"],
 .page-container textarea,
 .page-container select {
     width: 100%;            /* Eingabefelder nutzen volle Container-Breite */
+    box-sizing: border-box; /* Padding & Rahmen in die Breite einrechnen */
+}
+
+.page-container input[type="radio"]
+.page-container input[type="checkbox"] {
+    width: auto;          /* Radio-Buttons und Checkboxen nicht verbreitern */
 }
 
 /* ----------------------------- */
@@ -65,8 +73,9 @@ body {
 
 /* Überschriften der Fragen etwas kleiner als h1 */
 .question-group h2 {
-    font-size: 1.1rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
 } 
 
 /* Textfelder und Textareas im Formular */
@@ -74,7 +83,8 @@ body {
 .question-group input [type="number"],
 .question-group textarea, 
 .question-group select {
-    margin-top: 0.3rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
     padding: 0.35rem 0.4rem;
     font-size: 1rem;
 }
@@ -114,6 +124,14 @@ button:hover {
     border-radius: 4px;
 }
 
+/* Hinweistext für Mehrfachauswahl-Fragen */
+.question-hint {
+    font-size: 0.9rem;  /* Etwas kleiner als normaler Text */
+    color: #666;      /* Dezente Farbe */
+    font-style: italic; /* Kursiv */
+    margin-top: -0.3rem;    /* Abstand zur Überschrift verringern */
+    margin-bottom: 0.8rem;  /* Abstand zum nächsten Element vergrößern */
+}
 
 
 /* ----------------------------- */
@@ -134,15 +152,27 @@ td, th {
 /* Überschrift über der Tabelle */
 .task-title {
   margin-top: 2rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 /* Aufgabenstellung */
 .task-instruction {
   font-weight: 500;     
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
+/* Abstand zwischen den Fragen */
+.question-block {
+    margin-bottom: 1.2rem;
+}
+
+/* Abstand zwischen Frage-Text und Antwortfeld */
+.question-block input,
+.question-block textarea {
+    margin-top: 0.6rem;
+    padding: 0.35rem 0.4rem;
+    font-size: 1rem;
+}
 
 
 /* ----------------------------- */
