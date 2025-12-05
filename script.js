@@ -116,6 +116,9 @@ const nextButtonLight = document.getElementById("nextButtonLight");
 
 if (nextButtonLight) {
 
+    // Timer-Start beim Laden der Seite
+    const lightStart = Date.now();
+
     // Button standardmäßig erstmal gesperrt
     nextButtonLight.disabled = true; 
 
@@ -137,12 +140,22 @@ if (nextButtonLight) {
         input.addEventListener("input", checkLightFilled);
     });
 
-    // Weiterleitung zur Dark-Seite, nur wenn Button nicht disabled
+    // Klick: nur wenn Button aktiv ist
     nextButtonLight.addEventListener("click", function () {
         if (nextButtonLight.disabled) return; // Sicherheitsnetz
+
+        //Zeit stoppen & speichern
+        const lightTimeMs = Date.now() - lightStart;
+        localStorage.setItem("lightTimeMs", String(lightTimeMs));
+
+        // Debug:
+        // console.log("Light-Time", lightTimeMs);
+        
+        // weiter zur Dark-Seite
         window.location.href = "dark.html";   
     });
 }
+
 
 
 // ------------------------------------
@@ -185,14 +198,14 @@ if (nextButtonDark) {
 
         //Payload für Google Apps Script (Struktur später noch sauber anpassen  )
         const payload = {
-            participantID: localStorage.getItem("participantID"),
-            timeLightMs: Number(localStorage.getItem("lightTimeMs") || 0),
-            timeDarkMs: darkTimeMs,
+            participantId: localStorage.getItem("participantId"),
+            lightTimeMs: Number(localStorage.getItem("lightTimeMs") || 0),
+            darkTimeMs: darkTimeMs,
 
             demo: JSON.parse(localStorage.getItem("demoData") || "{}"),
 
-            answerLight: JSON.parse(localStorage.getItem("answerLight") || "{}"),
-            answerDark: JSON.parse(localStorage.getItem("answerDark") || "{}")
+            lightAnswers: JSON.parse(localStorage.getItem("lightAnswers") || "{}"),
+            darkAnswers: JSON.parse(localStorage.getItem("darkAnswers") || "{}")
         };
 
         fetch("https://script.google.com/macros/s/AKfycbwXK4HbqQQfr-1sXh0BRfEYXb6m590RLpJZXSXj2A2K7uXqk_MTwSbyiQgdt57NIQv6/exec", {
