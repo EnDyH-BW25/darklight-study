@@ -159,11 +159,11 @@ if (nextButtonLight) {
             q4: document.getElementById("lightQuestion4").value.trim()
         };
         localStorage.setItem("lightAnswers", JSON.stringify(lightAnswers));
-        });
 
         // weiter zur Dark-Seite
-        window.location.href = "dark.html";   
-    };
+        window.location.href = "dark.html"; 
+        });
+    }
 
 
 

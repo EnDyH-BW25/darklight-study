@@ -25,7 +25,7 @@ body {
     box-sizing: border-box; /* Padding & Rahmen in die Breite einrechnen */
 }
 
-.page-container input[type="radio"]
+.page-container input[type="radio"],
 .page-container input[type="checkbox"] {
     width: auto;          /* Radio-Buttons und Checkboxen nicht verbreitern */
 }
@@ -161,7 +161,7 @@ td, th {
 }
 
 /* Aufgabenstellung */
-.task-instruction {
+.task-introduction {
   font-weight: 500;     
   margin-bottom: 2rem;
 }
