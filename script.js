@@ -114,11 +114,13 @@ if (demoForm && demoNextButton) {
 const lightAnswers = document.querySelectorAll('input[name^="answer"]');
 const nextButtonLight = document.getElementById("nextButtonLight");
 
-if (nextButtonLight && lightAnswers.length === 4) {
-    nextButtonLight.disabled = true; // Button standardmäßig erstmal gesperrt
+if (nextButtonLight) {
+
+    // Button standardmäßig erstmal gesperrt
+    nextButtonLight.disabled = true; 
 
     function checkLightFilled() {
-        let allFilled = true
+        let allFilled = true;
 
         lightAnswers.forEach(input => {
             if (input.value.trim() === "") {
@@ -135,8 +137,9 @@ if (nextButtonLight && lightAnswers.length === 4) {
         input.addEventListener("input", checkLightFilled);
     });
 
-    // Weiterleitung zur Dark-Seite
-    nextButtonDarkLight.addEventListener("click", function () {
+    // Weiterleitung zur Dark-Seite, nur wenn Button nicht disabled
+    nextButtonLight.addEventListener("click", function () {
+        if (nextButtonLight.disabled) return; // Sicherheitsnetz
         window.location.href = "dark.html";   
     });
 }
@@ -150,7 +153,7 @@ const darkAnswers = document.querySelectorAll('input[name^="answer"]');
 // Daten bei Klick auf Dark-Weiter-Button senden
 const nextButtonDark = document.getElementById("nextButtonDark");
 
-if (nextButtonDark && darkAnswers.length === 4) {
+if (nextButtonDark) {
 
     nextButtonDark.disabled = true; // Button standardmäßig erstmal gesperrt
     const darkStart = Date.now(); // Startzeit für Dark-Seite
@@ -174,6 +177,8 @@ if (nextButtonDark && darkAnswers.length === 4) {
 
     // Klick => Zeit stoppen + Daten sendeen + Weiterleitung 
     nextButtonDark.addEventListener("click", function () {
+        if (nextButtonDark.disabled) return; // Sicherheitsnetz
+        
         // Dark-Zeit speichern
         const darkTimeMs = Date.now() - darkStart;
         localStorage.setItem("darkTimeMs", String(darkTimeMs));
@@ -181,7 +186,7 @@ if (nextButtonDark && darkAnswers.length === 4) {
         //Payload für Google Apps Script (Struktur später noch sauber anpassen  )
         const payload = {
             participantID: localStorage.getItem("participantID"),
-            timeLightMs: Number (localStorage.getItem("lightTimeMs") || 0),
+            timeLightMs: Number(localStorage.getItem("lightTimeMs") || 0),
             timeDarkMs: darkTimeMs,
 
             demo: JSON.parse(localStorage.getItem("demoData") || "{}"),
@@ -195,12 +200,8 @@ if (nextButtonDark && darkAnswers.length === 4) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         })
-        .then(() => {
-            window.location.href = "finish.html";
-        })
-        .catch(() => {
-            window.location.href = "finish.html";
-        });
+        .then(() => window.location.href = "finish.html")
+        .catch(() => window.location.href = "finish.html");
     });
 }
 
