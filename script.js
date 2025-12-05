@@ -107,16 +107,37 @@ if (demoForm && demoNextButton) {
 }
 
 // -----------------------------------
-// light.html - Weiterleitung (Timer & Antworten später)
+// light.html - Pflichtprüfung für Antworten 
+// + Weiterleitung (Timer & Antworten später)
 // -----------------------------------
 
-// Weiter-Button auf Light-Seite
+const lightAnswers = document.querySelectorAll('input[name^="answer"]');
 const nextButtonLight = document.getElementById("nextButtonLight");
 
-// Nur ausführen, wenn der Button existiert
-if (nextButtonLight) {
-    nextButtonLight.addEventListener("click", function () {
-        window.location.href = "dark.html";     // Weiterleitung zur Dark-Seite
+if (nextButtonLight && lightAnswers.length === 4) {
+    nextButtonLight.disabled = true; // Button standardmäßig erstmal gesperrt
+
+    function checkLightFilled() {
+        let allFilled = true
+
+        lightAnswers.forEach(input => {
+            if (input.value.trim() === "") {
+                allFilled = false;
+            }
+        });
+
+        // Button nur aktivieren, wenn alle Felder ausgefüllt sind
+        nextButtonLight.disabled = !allFilled; 
+    }
+
+    // Bei jeder Eingabe prüfen
+    lightAnswers.forEach(input => {
+        input.addEventListener("input", checkLightFilled);
+    });
+
+    // Weiterleitung zur Dark-Seite
+    nextButtonDarkLight.addEventListener("click", function () {
+        window.location.href = "dark.html";   
     });
 }
 
@@ -125,12 +146,33 @@ if (nextButtonLight) {
 // dark.html - Zeit + Daten senden (Timer & Antworten später)
 // ------------------------------------
 
+const darkAnswers = document.querySelectorAll('input[name^="answer"]');
 // Daten bei Klick auf Dark-Weiter-Button senden
 const nextButtonDark = document.getElementById("nextButtonDark");
 
-if (nextButtonDark) {
-   const darkStart = Date.now(); // Startzeit für Dark-Seite
+if (nextButtonDark && darkAnswers.length === 4) {
 
+    nextButtonDark.disabled = true; // Button standardmäßig erstmal gesperrt
+    const darkStart = Date.now(); // Startzeit für Dark-Seite
+
+    function checkDarkFilled() {
+        let allFilled = true;
+
+        darkAnswers.forEach(input => {
+            if (input.value.trim() === "") {
+                allFilled = false;
+            }
+        });
+
+        nextButtonDark.disabled = !allFilled; 
+    }
+
+    // Bei jeder Eingabe prüfen
+    darkAnswers.forEach(input => {
+        input.addEventListener("input", checkDarkFilled);
+    });
+
+    // Klick => Zeit stoppen + Daten sendeen + Weiterleitung 
     nextButtonDark.addEventListener("click", function () {
         // Dark-Zeit speichern
         const darkTimeMs = Date.now() - darkStart;
@@ -170,7 +212,6 @@ if (nextButtonDark) {
 // ------------------------------------
 // Datenübertragung und TimeStamps
 // ------------------------------------
-
 
 
 
