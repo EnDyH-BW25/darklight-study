@@ -123,9 +123,9 @@ if (nextButtonDark) {
 // ------------------------------------
 
 // Automatisches Erzeugen einer Teilnehmer-ID
-if (!localStorage.getItem("participantID")) {
-    const id = "p_" + Date.now(); + "-" + Math.floor(Math.random() * 1000000);
-    localStorage.setItem("participantID", id);
+if (!localStorage.getItem("participantId")) {
+    const id = "p_" + Date.now() + "-" + Math.floor(Math.random() * 1000000);
+    localStorage.setItem("participantId", id);
 }
 
 // 9 Demo-Felder sauber speichern
