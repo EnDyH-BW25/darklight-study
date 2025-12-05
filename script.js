@@ -1,26 +1,31 @@
+// ------------------------------
+// Teilnehmer-ID generieren
+// ------------------------------
+if (!localStorage.getItem("participantId")) {
+    const id = "p_" + Date.now() + "-" + Math.floor(Math.random() * 1000000);
+    localStorage.setItem("participantId", id);
+}
+
 // -----------------------------
-// index.html 
+// index.html - Einverständnis und Start
 // -----------------------------
 
-// Zugriff auf die Checkbox 
+// Zugriff auf die Checkbox & Start-Button
 const checkbox = document.getElementById("consentCheckbox"); 
-
-// Zugriff auf den Start-Button
 const startButton = document.getElementById("startButton"); 
 
 // Prüfen, ob wir auf index.html sind
-if (checkbox && startButton) {
-
-// Überprüft, ob die Checkbox angeklickt wurde
-checkbox.addEventListener("change", function () {
-    
-    // Wenn die Checkbox aktiviert ist...
-    if (this.checked) {
-        startButton.disabled = false;    // Button wird freigeschaltet
-    } else {
-        startButton.disabled = true     // Button bleibt gesperrt
-    }
-}); 
+if (checkbox && startButton) {  
+    // Überprüft, ob die Checkbox angeklickt wurde
+    checkbox.addEventListener("change", function () {
+        
+        // Wenn die Checkbox aktiviert ist...
+        if (this.checked) {
+            startButton.disabled = false;    // Button wird freigeschaltet
+        } else {
+            startButton.disabled = true     // Button bleibt gesperrt
+        }
+    }); 
 
 // Reaktion auf Klick auf den Start-Button
 startButton.addEventListener("click", function () {
@@ -30,59 +35,79 @@ startButton.addEventListener("click", function () {
 }
 
 // -------------------------------
-// demo.html
+// demo.html - Validierung + Demo-Daten
 // -------------------------------
 
-// Formular und Weiter-Button nur holen, wenn existent
 const demoForm = document.getElementById("demoForm");
 const demoNextButton = document.getElementById("demoNextButton");
 
-// Mehrfachauswahl holen
+// Checkboxes für Sehstatus und Geräte
 const visionCheckboxes = document.querySelectorAll('input[name="vision"]');
 const deviceCheckboxes = document.querySelectorAll('input[name="device"]');
 
-
 if (demoForm && demoNextButton) {
+    
     demoNextButton.addEventListener("click", function () {
-        
-        // 1. Normale Pflichtfeldprüfung (required)
-        const isValid = demoForm.reportValidity(); 
 
-        // 2. Mindestens eine Sehstatus-Checkox?
-        let visionChecked = false; 
-        visionCheckboxes.forEach(function (cb) {
+        // 1. Normale Pflichtfeldprüfung (required)
+        const isValid = demoForm.reportValidity();
+        if (!isValid) return; 
+
+        // 2. Mindestens eine Sehstatus-Checkbox?
+        let visionChecked = false;
+        visionCheckboxes.forEach(cb => {
             if (cb.checked) visionChecked = true;
         });
-
-        // 3. Mindestens eine Geräte-Checkbox?
-        let deviceChecked = false; 
-        deviceCheckboxes.forEach(function (cb) {
+        if (!visionChecked) {
+            alert("Bitte wählen Sie mindestens eine Option für Ihren Sehstatus aus.");
+            return;
+        }
+        
+        // 3. Mindestens ein Geräte-Checkbox?
+        let deviceChecked = false;
+        deviceCheckboxes.forEach(cb => {
             if (cb.checked) deviceChecked = true;
         });
-
-        // 4. Fehlermeldungen, falls nötig
-        if (!visionChecked) {
-            alert("Bitte wählen Sie mindestens eine Option für Ihren Sehstatus aus."); 
-            return; 
-        }
-
         if (!deviceChecked) {
             alert("Bitte wählen Sie mindestens ein häufig genutztes Gerät aus.");
-            return; 
+            return;
         }
 
-        // 5. Weiterleitung zur Light-Seite, wenn alles richtig ist
+        // 4. Demo-Daten in ein Objekt schreiben
+        const demoData = {
+            geschlecht: demoForm.gender.value,
+            altersgruppe: demoForm.ageGroup.value,
 
-        if (isValid && visionChecked && deviceChecked) {
-            window.location.href = "light.html"; 
-            // Später: hier können wir Daten an Google Sheets senden
-            // Aktuell: Weiterleitung zur Light-Mode-Aufgabe
-        }
+            sehstatus: Array.from(visionCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value)
+                .join(", "),
+
+            praeferenzModus: demoForm.prefMode.value,
+            praeferenzBegruendung: demoForm.prefReason.value,
+
+            studienfachBeruf: demoForm.background.value,
+            bildschirmzeit: demoForm.screenTime.value,
+
+            haeufigeGeraete: Array.from(deviceCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value)
+                .join(", "),
+        
+            teilnahmeGeraet: demoForm.currentDevice.value,
+            umgebungsbeleuchtung: demoForm.lightSetting.value
+        };
+
+        // 5. Demo-Daten im Browser speichern
+        localStorage.setItem("demoData", JSON.stringify(demoData));
+
+        // 6. Weiterleitung zur Light-Seite
+        window.location.href = "light.html";
     });
 }
 
 // -----------------------------------
-// light.html
+// light.html - Weiterleitung (Timer & Antworten später)
 // -----------------------------------
 
 // Weiter-Button auf Light-Seite
@@ -96,97 +121,37 @@ if (nextButtonLight) {
 }
 
 
-
 // ------------------------------------
-// dark.html
+// dark.html - Zeit + Daten senden (Timer & Antworten später)
 // ------------------------------------
-
-// Weiter-Button auf Dark-Seite
-const nextButtonDark = document.getElementById("nextButtonDark");
-
-// Nur ausführen, wenn der Button existiert
-if (nextButtonDark) {
-    nextButtonDark.addEventListener("click", function () {
-        window.location.href = "finish.html";     // Weiterleitung zur Finish-Seite
-    });
-}
-
-
-// ------------------------------------
-// finish.html
-// ------------------------------------
-
-
-
-// ------------------------------------
-// Datenübertragung und TimeStamps
-// ------------------------------------
-
-// Automatisches Erzeugen einer Teilnehmer-ID
-if (!localStorage.getItem("participantId")) {
-    const id = "p_" + Date.now() + "-" + Math.floor(Math.random() * 1000000);
-    localStorage.setItem("participantId", id);
-}
-
-// 9 Demo-Felder sauber speichern
-const demoForm = document.getElementById("demoForm");
-const demoNextButton = document.getElementById("demoNextButton");
-
-if (demoForm && demoNextButton) {
-    demoNextButton.addEventListener("click", function () {
-        const demoData = {
-            geschlecht: demoForm.gender.value,
-            altersgruppe: demoForm.ageGroup.value,
-
-            sehstatus: Array.from(
-                document.querySelectorAll('input[name="vision"]:checked')
-            ).map(cb => cb.value).join(", "),
-
-            praeferenzModus: demoForm.prefMode.value,
-            praeferenzBegruendung: demoForm.prefReason.value,
-
-            studienfachBeruf: demoForm.background.value,
-            bildschirmzeit: demoForm.screenTime.value,
-
-            haeufigeGeraete: Array.from(
-                document.querySelectorAll('input[name="device"]:checked')
-            ).map(cb => cb.value).join(", "),
-        
-            teilnahmeGeraet: demoForm.currentDevice.value,
-            umgebungsbeleuchtung: demoForm.lightSetting.value
-        };
-
-        localStorage.setItem("demoData", JSON.stringify(demoData));
-
-        window.location.href = "light.html";
-    });
-}
 
 // Daten bei Klick auf Dark-Weiter-Button senden
 const nextButtonDark = document.getElementById("nextButtonDark");
 
 if (nextButtonDark) {
-   const darkStart = Date.now();
+   const darkStart = Date.now(); // Startzeit für Dark-Seite
 
     nextButtonDark.addEventListener("click", function () {
+        // Dark-Zeit speichern
         const darkTimeMs = Date.now() - darkStart;
         localStorage.setItem("darkTimeMs", String(darkTimeMs));
 
-        const playload = {
+        //Payload für Google Apps Script (Struktur später noch sauber anpassen  )
+        const payload = {
             participantID: localStorage.getItem("participantID"),
-            timeLightMs: Number (localStorage.getItem("lightTimeMs")),
+            timeLightMs: Number (localStorage.getItem("lightTimeMs") || 0),
             timeDarkMs: darkTimeMs,
 
-            demoData: JSON.parse(localStorage.getItem("demoData")),
+            demo: JSON.parse(localStorage.getItem("demoData") || "{}"),
 
-            answerLight: JSON.parse(localStorage.getItem("answerLight")),
-            answerDark: JSON.parse(localStorage.getItem("answerDark"))
+            answerLight: JSON.parse(localStorage.getItem("answerLight") || "{}"),
+            answerDark: JSON.parse(localStorage.getItem("answerDark") || "{}")
         };
 
         fetch("https://script.google.com/macros/s/AKfycbwXK4HbqQQfr-1sXh0BRfEYXb6m590RLpJZXSXj2A2K7uXqk_MTwSbyiQgdt57NIQv6/exec", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(playload)
+            body: JSON.stringify(payload)
         })
         .then(() => {
             window.location.href = "finish.html";
@@ -196,5 +161,17 @@ if (nextButtonDark) {
         });
     });
 }
+
+// ------------------------------------
+// finish.html - aktuell keine JS-Logik nötig
+// ------------------------------------
+
+
+// ------------------------------------
+// Datenübertragung und TimeStamps
+// ------------------------------------
+
+
+
 
 
