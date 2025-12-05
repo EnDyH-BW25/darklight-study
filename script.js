@@ -151,10 +151,20 @@ if (nextButtonLight) {
         // Debug:
         // console.log("Light-Time", lightTimeMs);
         
+        // Light-Antworten auslesen & speichern
+        const lightAnswers = {
+            q1: document.getElementById("lightQuestion1").value.trim(),
+            q2: document.getElementById("lightQuestion2").value.trim(),
+            q3: document.getElementById("lightQuestion3").value.trim(),
+            q4: document.getElementById("lightQuestion4").value.trim()
+        };
+        localStorage.setItem("lightAnswers", JSON.stringify(lightAnswers));
+        });
+
         // weiter zur Dark-Seite
         window.location.href = "dark.html";   
-    });
-}
+    };
+
 
 
 
@@ -195,6 +205,15 @@ if (nextButtonDark) {
         // Dark-Zeit speichern
         const darkTimeMs = Date.now() - darkStart;
         localStorage.setItem("darkTimeMs", String(darkTimeMs));
+
+        // Dark-Antworten auslesen & speichern
+        const darkAnswers = {
+            q1: document.getElementById("darkQuestion1").value.trim(),
+            q2: document.getElementById("darkQuestion2").value.trim(),
+            q3: document.getElementById("darkQuestion3").value.trim(),
+            q4: document.getElementById("darkQuestion4").value.trim()
+        };
+        localStorage.setItem("darkAnswers", JSON.stringify(darkAnswers));
 
         //Payload für Google Apps Script (Struktur später noch sauber anpassen  )
         const payload = {
