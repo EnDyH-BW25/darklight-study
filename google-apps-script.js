@@ -1,43 +1,35 @@
 function doPost(e) {
   try {
-    // 1. Rohdaten ansehen
-    const rawBody = e.postData ? e.postData.contents : "";
-    const paramPayload = e.parameter ? e.parameter.payload : "";
-
-    // Logging zum Debuggen (in GAS unter "Ausführungen" einsehbar)
-    Logger.log("rawBody: " + rawBody); 
-    Logger.log("paramePayload: " + paramPayload); 
-
-    // 2. payload-String ermitteln
+    // 1. Payload sauber absichern
     let payloadStr = ""; 
 
-    if (paramPayload) {
-      // Schönster Fall: Formular-Feld "payload" wurde normal geparst
-      payloadStr = paramPayload; 
-    } else if (rawBody) {
-      // Fallback: Body selbst parsen, z.B. "payload=%7B%22...%7D"
-      if (rawBody.startsWith("payload=")) {
-        payloadStr = decodeURIComponent(rawBody.substring("payload=".length)); 
-      } else {
-        payloadStr = rawBody;
-      }
+    // Fall A: Formular-POST (bisheriger Weg)
+    if (e && e.parameter && e.parameter.payload) {
+      payloadStr = e.parameter.payload; 
     }
 
+    // Fall B: JSON-POST per fetch (Backup)
+    else if (e && e.postData && e.postData.contents) {
+      payloadStr = e.postData.contents; 
+    }
+
+    // Wenn beides nicht existiert => echter Fehler
     if (!payloadStr) {
       throw new Error("Kein payload übergeben"); 
     }
 
-    // 3. JSON in Objekt umwandeln
+    // 2. JSON in Objekt umwandeln
     const data = JSON.parse(payloadStr); 
 
-    // 4. Demo-Daten & Antworten absichern
+    // 3. Demo-Daten & Antworten absichern
     const demo = data.demo || {};
     const lightAnswers = data.lightAnswers || {}; 
     const darkAnswers = data.darkAnswers || {};
 
     // 5. Tabelle öffnen
     const ss = SpreadsheetApp.openById("1FT_kbkZfyUIlOpXqnA1roFO3h3hzxwSaXl6suAUP8BA"); 
-    const sheet = ss.getSheetByName("DarkLight_Studie_Daten");  
+    const sheet = ss.getSheetByName("DarkLight_Studie_Daten"); 
+
     if (!sheet) {
       throw new Error("Tabellenblatt 'DarkLight_Studie_Daten' nicht gefunden.");
     }
