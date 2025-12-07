@@ -1,48 +1,32 @@
 function doPost(e) {
   try {
-    // 1. Rohdaten ansehen
-    const rawBody = e.postData ? e.postData.contents : "";
-    const paramPayload = e.parameter ? e.parameter.payload : "";
-
-    // Logging zum Debuggen (in GAS unter "Ausführungen" einsehbar)
-    Logger.log("rawBody: " + rawBody); 
-    Logger.log("paramePayload: " + paramPayload); 
-
-    // 2. payload-String ermitteln
-    let payloadStr = ""; 
-
-    if (paramPayload) {
-      // Schönster Fall: Formular-Feld "payload" wurde normal geparst
-      payloadStr = paramPayload; 
-    } else if (rawBody) {
-      // Fallback: Body selbst parsen, z.B. "payload=%7B%22...%7D"
-      if (rawBody.startsWith("payload=")) {
-        payloadStr = decodeURIComponent(rawBody.substring("payload=".length)); 
-      } else {
-        payloadStr = rawBody;
-      }
+    // 1. Sicherstellen, dass Parameter und Payload vorhanden sind
+    if (!e || !e.parameter || !e.parameter.payload) {
+      throw new Error("Fehlende Formulardaten (z.B. Payload).");
     }
 
-    if (!payloadStr) {
-      throw new Error("Kein payload übergeben"); 
+    // 2. JSON-String in Objekt umwandeln
+    var data = JSON.parse(e.parameter.payload); 
+
+    // 2b. Prüfen, ob die kritischen Daten im geparsten Objekt sind
+    if (!data.participantId) {
+      throw new Error("Participant ID fehlt im Payload.");
     }
 
-    // 3. JSON in Objekt umwandeln
-    const data = JSON.parse(payloadStr); 
+    // Daten vorbereiten
+    var demo = data.demo || {}; 
+    var lightAnswers = data.lightAnswers || {};
+    var darkAnswers = data.darkAnswers || {};
 
-    // 4. Demo-Daten & Antworten absichern
-    const demo = data.demo || {};
-    const lightAnswers = data.lightAnswers || {}; 
-    const darkAnswers = data.darkAnswers || {};
+    // 3. Tabelle öffnen
+    var ss = SpreadsheetApp.openById("1FT_kbkZfyUIlOpXqnA1roFO3h3hzxwSaXl6suAUP8BA"); 
+    var sheet = ss.getSheetByName("DarkLight_Studie_Daten"); 
 
-    // 5. Tabelle öffnen
-    const ss = SpreadsheetApp.openById("1FT_kbkZfyUIlOpXqnA1roFO3h3hzxwSaXl6suAUP8BA"); 
-    const sheet = ss.getSheetByName("DarkLight_Studie_Daten");  
     if (!sheet) {
       throw new Error("Tabellenblatt 'DarkLight_Studie_Daten' nicht gefunden.");
     }
 
-    // 6. Daten in neue Zeile anhängen
+    // 4. Daten in neue Zeile anhängen
     sheet.appendRow([
       new Date(),               // Timestamp
       data.participantId || "", // Participant ID
@@ -76,8 +60,8 @@ function doPost(e) {
       darkAnswers.q4 || "",
     ]);
 
-    // 7. finish-html über Google ausgeben (Redirect auf GitHub Pages)
-    const html = HtmlService.createHtmlOutput (`
+    // 5. Redirect auf finish.html
+    return HtmlService.createHtmlOutput (`
       <!DOCTYPE html>
       <html lang="de">
         <head>
@@ -95,16 +79,20 @@ function doPost(e) {
       </html>
     `);
 
-    return html; 
-
   } catch (err) {
     // Fehler ins Log schreiben und einf Fehlermeldung ausgeben
     console.error(err);
     return HtmlService.createHtmlOutput(
       '<DOCTYPE html><html><body>' + 
-      '<h2>Fehler bei der Datenübertragung</h2>' +
+      '<h2>Fehler bei der Datenübertragung</h2>‚' +
       '<p>' + err.message + '</p>' + 
       '</body></html>'
     );
   }
+}
+
+// Nur, damit die Web-App-URL in Browser keinen Fehler zeigt: 
+function doGet(e) {
+  return HtmlService.createHtmlOutput("<html><body><p>Diese Web-App erwartet POST-Anfragen von der Studie.</p></body></html>"
+  );
 }

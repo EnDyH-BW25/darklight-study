@@ -231,7 +231,7 @@ if (nextButtonDark) {
         const form = document.createElement("form");
         form.method = "POST";
         // GAS Web-App URL => immer aktuelle URL verwenden!
-        form.action = "https://script.google.com/macros/s/AKfycbwXK4HbqQQfr-1sXh0BRfEYXb6m590RLpJZXSXj2A2K7uXqk_MTwSbyiQgdt57NIQv6/exec";
+        form.action = "https://script.google.com/macros/s/AKfycbwb8xKme8nR8Ym99wwV4NjWAE1f2hCcOO68TWBQ94ArkU_eYjBHDX_WGMSNTykPap4a/exec";
 
         // Ein verstecktes Feld mit dem kompletten JSON-Payload
         const input = document.createElement("input");
