@@ -227,26 +227,22 @@ if (nextButtonDark) {
             darkAnswers: JSON.parse(localStorage.getItem("darkAnswers") || "{}")
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbwYYDzvgxJXOljo-CS_rmPJZEV2bzCMIUxma-Z9g_2aKH9UqcsImXdmEM3_bOby4bGh/exec", {
-            method: "POST",
-            mode: "no-cors",    // <= wichtig für Apps Script, dass CORS nicht blockt 
-            headers: { 
-                // einfacher Content-Type, damit kein Preflight ausgelöst wird
-                "Content-Type": "text/plain;charset=utf-8" 
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(() => {
-            // bei no-cors keine verwertbare Antwort als return, request wird trzdem gesendet
-            // Weiterleitung zur Abschlussseite
-            window.location.href = "finish.html";
-        })
+        // Formular-Daten über klassischen POST an Google Apps Script senden
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "https://script.google.com/macros/s/AKfycbwYYDzvgxJXOljo-CS_rmPJZEV2bzCMIUxma-Z9g_2aKH9UqcsImXdmEM3_bOby4bGh/exec";
 
-        .catch((error) => {
-            console.error("Netzwerk-/Script-Fehler:", error);
-            // Zur Not trzdem weiterleien, damit TN nicht hängen bleibt
-            window.location.href = "finish.html";
-        });
+        // Ein verstecktes Feld mit dem kompletten JSON-Payload
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "payload"; // Name, den wir im GAS auslesen
+        input.value = JSON.stringify(payload);
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+
+        // Formular absenden => Browser ruft GAS auf
+        form.submit();
     });
 }
 
