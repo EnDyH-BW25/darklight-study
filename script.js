@@ -232,8 +232,27 @@ if (nextButtonDark) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         })
-        .then(() => window.location.href = "finish.html")
-        .catch(() => window.location.href = "finish.html");
+        .then(async (response) => {
+            const text = await response.text();
+            console.log("Apps Script Status::", response.status);
+            console.log("Apps Script Antwort:", text);
+
+            if (!response.ok) {
+                alert("Fehler bei der Übertragung");
+                // hier NICHT weiterleiten, damit Fehler sichtbar 
+                return; 
+            }
+            
+            // Nur bei Erfolg weiterleiten
+            window.location.href = "finish.html"
+        })
+        .catch((error) => {
+            console.error("Netzwerk-/Script-Fehler:", error);
+            // Im echten Durchlauf trotzdem weiterleiten: 
+            // window.location.href = "finish.html";
+            // sobald live: Zeile hierunter löschen und gegen Zeile über dieser ersetzen
+            alert("Netzwerkfehler oder Apps Script nicht erreichbar. Details in der Konsole.");
+        });
     });
 }
 
