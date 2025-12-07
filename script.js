@@ -230,7 +230,7 @@ if (nextButtonDark) {
         // Formular-Daten über klassischen POST an Google Apps Script senden
         const form = document.createElement("form");
         form.method = "POST";
-        form.action = "https://script.google.com/macros/s/AKfycbwYYDzvgxJXOljo-CS_rmPJZEV2bzCMIUxma-Z9g_2aKH9UqcsImXdmEM3_bOby4bGh/exec";
+        form.action = "https://script.google.com/macros/s/AKfycbwXK4HbqQQfr-1sXh0BRfEYXb6m590RLpJZXSXj2A2K7uXqk_MTwSbyiQgdt57NIQv6/exec";
 
         // Ein verstecktes Feld mit dem kompletten JSON-Payload
         const input = document.createElement("input");
