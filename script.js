@@ -229,42 +229,26 @@ if (nextButtonDark) {
 
         fetch("https://script.google.com/macros/s/AKfycbwYYDzvgxJXOljo-CS_rmPJZEV2bzCMIUxma-Z9g_2aKH9UqcsImXdmEM3_bOby4bGh/exec", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            mode: "no-cors",    // <= wichtig für Apps Script, dass CORS nicht blockt 
+            headers: { 
+                // einfacher Content-Type, damit kein Preflight ausgelöst wird
+                "Content-Type": "text/plain;charset=utf-8" 
+            },
             body: JSON.stringify(payload)
         })
-        .then(async (response) => {
-            const text = await response.text();
-            console.log("Apps Script Status::", response.status);
-            console.log("Apps Script Antwort:", text);
-
-            if (!response.ok) {
-                alert("Fehler bei der Übertragung");
-                // hier NICHT weiterleiten, damit Fehler sichtbar 
-                return; 
-            }
-            
-            // Nur bei Erfolg weiterleiten
-            window.location.href = "finish.html"
+        .then(() => {
+            // bei no-cors keine verwertbare Antwort als return, request wird trzdem gesendet
+            // Weiterleitung zur Abschlussseite
+            window.location.href = "finish.html";
         })
+
         .catch((error) => {
             console.error("Netzwerk-/Script-Fehler:", error);
-            // Im echten Durchlauf trotzdem weiterleiten: 
-            // window.location.href = "finish.html";
-            // sobald live: Zeile hierunter löschen und gegen Zeile über dieser ersetzen
-            alert("Netzwerkfehler oder Apps Script nicht erreichbar. Details in der Konsole.");
+            // Zur Not trzdem weiterleien, damit TN nicht hängen bleibt
+            window.location.href = "finish.html";
         });
     });
 }
-
-// ------------------------------------
-// finish.html - aktuell keine JS-Logik nötig
-// ------------------------------------
-
-
-// ------------------------------------
-// Datenübertragung und TimeStamps
-// ------------------------------------
-
 
 
 
