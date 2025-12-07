@@ -230,6 +230,7 @@ if (nextButtonDark) {
         // Formular-Daten über klassischen POST an Google Apps Script senden
         const form = document.createElement("form");
         form.method = "POST";
+        // GAS Web-App URL
         form.action = "https://script.google.com/macros/s/AKfycbwXK4HbqQQfr-1sXh0BRfEYXb6m590RLpJZXSXj2A2K7uXqk_MTwSbyiQgdt57NIQv6/exec";
 
         // Ein verstecktes Feld mit dem kompletten JSON-Payload
