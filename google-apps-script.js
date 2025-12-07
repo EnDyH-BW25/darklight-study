@@ -3,14 +3,19 @@ function doPost(e) {
     // 1. Payload sauber absichern
     let payloadStr = ""; 
 
-    // Fall A: Formular-POST (bisheriger Weg)
+    // Normalfall: Formular-POST mit Feld "payload"
     if (e && e.parameter && e.parameter.payload) {
       payloadStr = e.parameter.payload; 
     }
 
-    // Fall B: JSON-POST per fetch (Backup)
+    // Backup: JSON-POST per fetch
     else if (e && e.postData && e.postData.contents) {
-      payloadStr = e.postData.contents; 
+      const rawBody = e.postData.contents;
+      if (rawBody.startsWith("payload=")) {
+        payloadStr = decodeURIComponent(rawBody.substring("payload=".length));
+      } else {
+        payloadStr = rawBody;
+      }
     }
 
     // Wenn beides nicht existiert => echter Fehler
