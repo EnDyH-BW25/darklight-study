@@ -152,7 +152,7 @@ if (nextButtonLight) {
         // console.log("Light-Time", lightTimeMs);
         
         // Light-Antworten auslesen & speichern
-        const lightAnswers = {
+        const lightPayloadAnswers = {
             q1: document.getElementById("lightQuestion1").value.trim(),
             q2: document.getElementById("lightQuestion2").value.trim(),
             q3: document.getElementById("lightQuestion3").value.trim(),
@@ -206,8 +206,8 @@ if (nextButtonDark) {
         const darkTimeMs = Date.now() - darkStart;
         localStorage.setItem("darkTimeMs", String(darkTimeMs));
 
-        // Dark-Antworten auslesen & speichern
-        const darkAnswers = {
+        // Dark-Antworten auslesen & speichern (mit neuem Namen)
+        const darkPayloadAnswers = { 
             q1: document.getElementById("darkQuestion1").value.trim(),
             q2: document.getElementById("darkQuestion2").value.trim(),
             q3: document.getElementById("darkQuestion3").value.trim(),
@@ -250,7 +250,7 @@ if (nextButtonDark) {
         console.log("Gesendeter Payload-String:", input.value);
         
         form.appendChild(input);
-        
+
         // Formular absenden => Browser ruft GAS auf
         form.submit();
     });
