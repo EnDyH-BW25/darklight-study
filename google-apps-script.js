@@ -1,11 +1,18 @@
 function doPost(e) {
   try {
-    // 1. Sicherstellen, dass Parameter und Payload vorhanden sind
-    if (!e || !e.parameter || !e.parameter.payload) {
-      throw new Error("Fehlende Formulardaten (z.B. Payload).");
+    // 1a. Prüfen, ob das e-Objekt und die Parameter vorhanden sind.
+    // e.paramter sollte immer existieren, wenn ein Formular gesendet wird.
+    if (!e || !e.parameter) {
+      throw new Error("POST-Anfrage enthielt keine Parameter (e.parameter).");
     }
 
-    // 2. JSON-String in Objekt umwandeln
+    // 1b. Prüfen, ob spezifischer payload-Name 'payload' vorhanden ist.
+      if (!e.parameter.payload) {
+      // Wenn der Fehler hier auftritt, bedeutet es, dass das Hidden-Feld fehlt. 
+      throw new Error("Fehlende Formulardaten (z. B. Payload).");
+    }
+
+    // 2. Wenn Payload da ist, parsen und Rest des Scripts weiterlaufen lassen
     var data = JSON.parse(e.parameter.payload); 
 
     // 2b. Prüfen, ob die kritischen Daten im geparsten Objekt sind
@@ -25,6 +32,8 @@ function doPost(e) {
     if (!sheet) {
       throw new Error("Tabellenblatt 'DarkLight_Studie_Daten' nicht gefunden.");
     }
+
+    sheet.appendRow(["TEST_POST_SUCCESS"])
 
     // 4. Daten in neue Zeile anhängen
     sheet.appendRow([
@@ -84,7 +93,7 @@ function doPost(e) {
     console.error(err);
     return HtmlService.createHtmlOutput(
       '<DOCTYPE html><html><body>' + 
-      '<h2>Fehler bei der Datenübertragung</h2>‚' +
+      '<h2>Fehler bei der Datenübertragung</h2>' +
       '<p>' + err.message + '</p>' + 
       '</body></html>'
     );
