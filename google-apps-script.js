@@ -69,24 +69,9 @@ function doPost(e) {
       darkAnswers.q4 || "",
     ]);
 
-    // 5. Redirect auf finish.html
-    return HtmlService.createHtmlOutput (`
-      <!DOCTYPE html>
-      <html lang="de">
-        <head>
-          <meta charset="UTF-8">
-          <meta http-equiv="refresh" content="0;url=https://endyh-bw25.github.io/darklight-study/finish.html">
-          <title>Abschluss unserer Studie</title>
-          <script>
-            // Fallback, falls meta-refresh vom Browser blockiert wird
-            window.location.href="https://endyh-bw25.github.io/darklight-study/finish.html";
-          </script>
-        </head>
-        <body>
-          <p>Weiterleitung zur Abschlussseite...</p>
-        </body>
-      </html>
-    `);
+    // 5. einfache Textbestätigung 
+    return ContentService.createTextOutput("Daten erfolgreich gesendet.")
+    .setMimeType(ContentService.MimeType.TEXT);
 
   } catch (err) {
     // Fehler ins Log schreiben und einf Fehlermeldung ausgeben
