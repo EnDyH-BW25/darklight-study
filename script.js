@@ -242,6 +242,15 @@ if (nextButtonDark) {
         form.appendChild(input);
         document.body.appendChild(form);
 
+
+        // Debug-Zeile: 
+        input.value = JSON.stringify(payload);
+
+        // Neuer Debug-Schritt: 
+        console.log("Gesendeter Payload-String:", input.value);
+        
+        form.appendChild(input);
+        
         // Formular absenden => Browser ruft GAS auf
         form.submit();
     });
