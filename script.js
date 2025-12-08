@@ -198,6 +198,7 @@ if (nextButtonDark) {
         input.addEventListener("input", checkDarkFilled);
     });
 
+    // CLICK-HANDLER:
     // Klick => Zeit stoppen + Daten sendeen + Weiterleitung 
     nextButtonDark.addEventListener("click", function () {
         if (nextButtonDark.disabled) return; // Sicherheitsnetz
@@ -215,38 +216,47 @@ if (nextButtonDark) {
         };
         localStorage.setItem("darkAnswers", JSON.stringify(darkPayloadAnswers));
 
-        //Payload für Google Apps Script (Struktur später noch sauber anpassen  )
+        //Payload für Google Apps Script 
         const payload = {
             participantId: localStorage.getItem("participantId"),
             lightTimeMs: Number(localStorage.getItem("lightTimeMs") || 0),
             darkTimeMs: darkTimeMs,
-
             demo: JSON.parse(localStorage.getItem("demoData") || "{}"),
-
             lightAnswers: JSON.parse(localStorage.getItem("lightAnswers") || "{}"),
             darkAnswers: JSON.parse(localStorage.getItem("darkAnswers") || "{}")
         };
 
-        // Formular-Daten über klassischen POST an Google Apps Script senden
-        const form = document.createElement("form");
-        form.method = "POST";
-        // GAS Web-App URL => immer aktuelle URL verwenden!
-        form.action = "https://script.google.com/macros/s/AKfycbwODOR_xwQUIWYz-O-2TcAdVmWSnCrDSq9KelTjyXZSIPuiegAMJMVp91HqbNkIPJcU/exec";
+        // Daten in das für GAS benötigte FormData-Format verpacken
+        const formData = new FormData();
+        // Der Schlüssel 'payload' ist der Name, den GAS in e.parameter.payload erwartet
+        formData.append("payload", JSON.stringify(payload));
 
-        // Ein verstecktes Feld mit dem kompletten JSON-Payload
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "payload"; // Name, den wir im GAS auslesen
-        input.value = JSON.stringify(payload);
+        // GAS URL muss immer aktuell sein
+        const gasUrl = "https://script.google.com/macros/s/AKfycbyqUN6h3d9MEU5HynQ4FbjDCUyo0_FdAD7zXCjcrbS7dByGvqTPJKp5LnSV8-QNsGqX/exec";
 
-        form.appendChild(input);
-        document.body.appendChild(form);
+        // Debugging: 
+        console.log("Sende Payload über Fetch:", JSON.stringify(payload));
 
-        // String prüfen 
-        console.log("Gesendeter Payload-String:", input.value);
-
-        // Formular absenden => Browser ruft GAS auf
-        form.submit();
+        // 2. Fetch-Request an GAS senden
+        fetch(gasUrl, {
+            method: "POST",
+            body: formData 
+            // FormData sorgt für die korrekte Formatierung des Request-Body
+            // Redirects werden hier automatisch nachverfolgt
+        })
+        .then(response => {
+            if (!response.ok) {
+                // Wenn GAS einen HTTP-Fehler zurückgibt (oft nicht der Fall, weil meist 200 OK), wird er hier abgefangen
+                throw new Error(`Serverfehler: Status ${response.status}`);
+            }
+            // Da der POST erfolgreich an GAS ging, leiten wir direkt weiter. 
+            window.location.href = "finish.html";
+        })
+        .catch(error => {
+            // Netzwerkfehler oder andere Fetch-bezogene Fehler werden hier abgefangen
+            console.error("Fehler beim Senden oder Weiterleiten:", error);
+            alert("Ein kritischer Fehler ist bei der Datenübertragung aufgetreten. Bitte wenden Sie sich an den Studienleiter." + error.message);
+        });
     });
 }
 
