@@ -158,7 +158,7 @@ if (nextButtonLight) {
             q3: document.getElementById("lightQuestion3").value.trim(),
             q4: document.getElementById("lightQuestion4").value.trim()
         };
-        localStorage.setItem("lightAnswers", JSON.stringify(lightAnswers));
+        localStorage.setItem("lightAnswers", JSON.stringify(lightPayloadAnswers));
 
         // weiter zur Dark-Seite
         window.location.href = "dark.html"; 
@@ -213,7 +213,7 @@ if (nextButtonDark) {
             q3: document.getElementById("darkQuestion3").value.trim(),
             q4: document.getElementById("darkQuestion4").value.trim()
         };
-        localStorage.setItem("darkAnswers", JSON.stringify(darkAnswers));
+        localStorage.setItem("darkAnswers", JSON.stringify(darkPayloadAnswers));
 
         //Payload für Google Apps Script (Struktur später noch sauber anpassen  )
         const payload = {
@@ -231,7 +231,7 @@ if (nextButtonDark) {
         const form = document.createElement("form");
         form.method = "POST";
         // GAS Web-App URL => immer aktuelle URL verwenden!
-        form.action = "https://script.google.com/macros/s/AKfycbz0DvsHzH5cj2oQ0kLgagEjHcfoYI2vVrSVNYUnBxtx2gsG6vayYUU4Rp92Jxx0sD32/exec";
+        form.action = "https://script.google.com/macros/s/AKfycbwODOR_xwQUIWYz-O-2TcAdVmWSnCrDSq9KelTjyXZSIPuiegAMJMVp91HqbNkIPJcU/exec";
 
         // Ein verstecktes Feld mit dem kompletten JSON-Payload
         const input = document.createElement("input");
@@ -242,14 +242,8 @@ if (nextButtonDark) {
         form.appendChild(input);
         document.body.appendChild(form);
 
-
-        // Debug-Zeile: 
-        input.value = JSON.stringify(payload);
-
-        // Neuer Debug-Schritt: 
+        // String prüfen 
         console.log("Gesendeter Payload-String:", input.value);
-        
-        form.appendChild(input);
 
         // Formular absenden => Browser ruft GAS auf
         form.submit();
