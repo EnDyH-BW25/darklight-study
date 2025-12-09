@@ -11,27 +11,27 @@ if (!localStorage.getItem("participantId")) {
 // -----------------------------
 
 // Zugriff auf die Checkbox & Start-Button
-const checkbox = document.getElementById("consentCheckbox"); 
-const startButton = document.getElementById("startButton"); 
+const checkbox = document.getElementById("consentCheckbox");
+const startButton = document.getElementById("startButton");
 
 // Prüfen, ob wir auf index.html sind
-if (checkbox && startButton) {  
+if (checkbox && startButton) {
     // Überprüft, ob die Checkbox angeklickt wurde
     checkbox.addEventListener("change", function () {
-        
+
         // Wenn die Checkbox aktiviert ist...
         if (this.checked) {
             startButton.disabled = false;    // Button wird freigeschaltet
         } else {
             startButton.disabled = true     // Button bleibt gesperrt
         }
-    }); 
+    });
 
-// Reaktion auf Klick auf den Start-Button
-startButton.addEventListener("click", function () {
-    // Weiterleitung zur nächsten Seite (Demografie-Seite)
-    window.location.href = "demo.html"; 
-}); 
+    // Reaktion auf Klick auf den Start-Button
+    startButton.addEventListener("click", function () {
+        // Weiterleitung zur nächsten Seite (Demografie-Seite)
+        window.location.href = "demo.html";
+    });
 }
 
 // -------------------------------
@@ -46,12 +46,12 @@ const visionCheckboxes = document.querySelectorAll('input[name="vision"]');
 const deviceCheckboxes = document.querySelectorAll('input[name="device"]');
 
 if (demoForm && demoNextButton) {
-    
+
     demoNextButton.addEventListener("click", function () {
 
         // 1. Normale Pflichtfeldprüfung (required)
         const isValid = demoForm.reportValidity();
-        if (!isValid) return; 
+        if (!isValid) return;
 
         // 2. Mindestens eine Sehstatus-Checkbox?
         let visionChecked = false;
@@ -62,7 +62,7 @@ if (demoForm && demoNextButton) {
             alert("Bitte wählen Sie mindestens eine Option für Ihren Sehstatus aus.");
             return;
         }
-        
+
         // 3. Mindestens ein Geräte-Checkbox?
         let deviceChecked = false;
         deviceCheckboxes.forEach(cb => {
@@ -93,7 +93,7 @@ if (demoForm && demoNextButton) {
                 .filter(cb => cb.checked)
                 .map(cb => cb.value)
                 .join(", "),
-        
+
             teilnahmeGeraet: demoForm.currentDevice.value,
             umgebungsbeleuchtung: demoForm.lightSetting.value
         };
@@ -120,7 +120,7 @@ if (nextButtonLight) {
     const lightStart = Date.now();
 
     // Button standardmäßig erstmal gesperrt
-    nextButtonLight.disabled = true; 
+    nextButtonLight.disabled = true;
 
     function checkLightFilled() {
         let allFilled = true;
@@ -132,7 +132,7 @@ if (nextButtonLight) {
         });
 
         // Button nur aktivieren, wenn alle Felder ausgefüllt sind
-        nextButtonLight.disabled = !allFilled; 
+        nextButtonLight.disabled = !allFilled;
     }
 
     // Bei jeder Eingabe prüfen
@@ -150,7 +150,7 @@ if (nextButtonLight) {
 
         // Debug:
         // console.log("Light-Time", lightTimeMs);
-        
+
         // Light-Antworten auslesen & speichern
         const lightPayloadAnswers = {
             q1: document.getElementById("lightQuestion1").value.trim(),
@@ -161,9 +161,9 @@ if (nextButtonLight) {
         localStorage.setItem("lightAnswers", JSON.stringify(lightPayloadAnswers));
 
         // weiter zur Dark-Seite
-        window.location.href = "dark.html"; 
-        });
-    }
+        window.location.href = "dark.html";
+    });
+}
 
 
 
@@ -190,7 +190,7 @@ if (nextButtonDark) {
             }
         });
 
-        nextButtonDark.disabled = !allFilled; 
+        nextButtonDark.disabled = !allFilled;
     }
 
     // Bei jeder Eingabe prüfen
@@ -202,13 +202,13 @@ if (nextButtonDark) {
     // Klick => Zeit stoppen + Daten sendeen + Weiterleitung 
     nextButtonDark.addEventListener("click", function () {
         if (nextButtonDark.disabled) return; // Sicherheitsnetz
-        
+
         // Dark-Zeit speichern
         const darkTimeMs = Date.now() - darkStart;
         localStorage.setItem("darkTimeMs", String(darkTimeMs));
 
         // Dark-Antworten auslesen & speichern (mit neuem Namen)
-        const darkPayloadAnswers = { 
+        const darkPayloadAnswers = {
             q1: document.getElementById("darkQuestion1").value.trim(),
             q2: document.getElementById("darkQuestion2").value.trim(),
             q3: document.getElementById("darkQuestion3").value.trim(),
@@ -240,23 +240,22 @@ if (nextButtonDark) {
         // 2. Fetch-Request an GAS senden
         fetch(gasUrl, {
             method: "POST",
-            body: formData 
-            // FormData sorgt für die korrekte Formatierung des Request-Body
-            // Redirects werden hier automatisch nachverfolgt
+            body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                // Wenn GAS einen HTTP-Fehler zurückgibt (oft nicht der Fall, weil meist 200 OK), wird er hier abgefangen
-                throw new Error(`Serverfehler: Status ${response.status}`);
-            }
-            // Da der POST erfolgreich an GAS ging, leiten wir direkt weiter. 
-            window.location.href = "finish.html";
-        })
-        .catch(error => {
-            // Netzwerkfehler oder andere Fetch-bezogene Fehler werden hier abgefangen
-            console.error("Fehler beim Senden oder Weiterleiten:", error);
-            alert("Ein kritischer Fehler ist bei der Datenübertragung aufgetreten. Bitte wenden Sie sich an den Studienleiter." + error.message);
-        });
+            .then(response => response.json()) // Wir erwarten jetzt JSON
+            .then(data => {
+                if (data.status === "success") {
+                    // Nur bei explizitem Erfolg weiterleiten
+                    window.location.href = "finish.html";
+                } else {
+                    // Fehler vom Server anzeigen
+                    throw new Error(data.message || "Unbekannter Server-Fehler");
+                }
+            })
+            .catch(error => {
+                console.error("Fehler beim Senden:", error);
+                alert("Fehler beim Speichern der Daten: " + error.message + "\nBitte wenden Sie sich an den Studienleiter.");
+            });
     });
 }
 
