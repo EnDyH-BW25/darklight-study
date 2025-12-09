@@ -27,11 +27,11 @@ function doPost(e) {
 
     // 3. Tabelle öffnen
     // TODO: Replace with your own Spreadsheet ID
-    var ss = SpreadsheetApp.openById("1nagWcTjg56Ha3GuDZIGpm6w6X-qLu3ypNbtsdV4jR3I");
-    var sheet = ss.getSheetByName("DarkLight_Studie_Daten_test");
+    var ss = SpreadsheetApp.openById("1DCB-6I1zTGv9FV0dhtg2hJrwf277V6HFU587kPcEZXs");
+    var sheet = ss.getSheetByName("Studie_LM-DM_Daten");
 
     if (!sheet) {
-      throw new Error("Tabellenblatt 'DarkLight_Studie_Daten_test' nicht gefunden.");
+      throw new Error("Tabellenblatt 'Studie_LM-DM_Daten' nicht gefunden.");
     }
 
 
