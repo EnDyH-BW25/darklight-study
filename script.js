@@ -232,7 +232,7 @@ if (nextButtonDark) {
         formData.append("payload", JSON.stringify(payload));
 
         // GAS URL muss immer aktuell sein
-        const gasUrl = "https://script.google.com/macros/s/AKfycbxnvJzlauUn_A9Q2usQB9esosavSZYm8JosHK3eRWvKUCNS3ydYCGPI_z7KBwcFQha6/exec";
+        const gasUrl = "https://script.google.com/macros/s/AKfycbzwJ03rxOy4TwhKWGEF8MwTjJjtka9iO6Bxd1qNgpmeRJHeuzufaeU3xedtRjtcGVYm/exec";
 
         // Debugging: 
         console.log("Sende Payload über Fetch:", JSON.stringify(payload));
