@@ -7,13 +7,13 @@ function doPost(e) {
     }
 
     // 1b. Prüfen, ob spezifischer payload-Name 'payload' vorhanden ist.
-      if (!e.parameter.payload) {
+    if (!e.parameter.payload) {
       // Wenn der Fehler hier auftritt, bedeutet es, dass das Hidden-Feld fehlt. 
       throw new Error("Fehlende Formulardaten (z. B. Payload).");
     }
 
     // 2. Wenn Payload da ist, parsen und Rest des Scripts weiterlaufen lassen
-    var data = JSON.parse(e.parameter.payload); 
+    var data = JSON.parse(e.parameter.payload);
 
     // 2b. Prüfen, ob die kritischen Daten im geparsten Objekt sind
     if (!data.participantId) {
@@ -21,19 +21,20 @@ function doPost(e) {
     }
 
     // Daten vorbereiten
-    var demo = data.demo || {}; 
+    var demo = data.demo || {};
     var lightAnswers = data.lightAnswers || {};
     var darkAnswers = data.darkAnswers || {};
 
     // 3. Tabelle öffnen
-    var ss = SpreadsheetApp.openById("1FT_kbkZfyUIlOpXqnA1roFO3h3hzxwSaXl6suAUP8BA"); 
-    var sheet = ss.getSheetByName("DarkLight_Studie_Daten"); 
+    // TODO: Replace with your own Spreadsheet ID
+    var ss = SpreadsheetApp.openById("1nagWcTjg56Ha3GuDZIGpm6w6X-qLu3ypNbtsdV4jR3I");
+    var sheet = ss.getSheetByName("DarkLight_Studie_Daten_test");
 
     if (!sheet) {
-      throw new Error("Tabellenblatt 'DarkLight_Studie_Daten' nicht gefunden.");
+      throw new Error("Tabellenblatt 'DarkLight_Studie_Daten_test' nicht gefunden.");
     }
 
-    sheet.appendRow(["TEST_POST_SUCCESS"])
+
 
     // 4. Daten in neue Zeile anhängen
     sheet.appendRow([
@@ -69,19 +70,21 @@ function doPost(e) {
       darkAnswers.q4 || "",
     ]);
 
-    // 5. einfache Textbestätigung 
-    return ContentService.createTextOutput("Daten erfolgreich gesendet.")
-    .setMimeType(ContentService.MimeType.TEXT);
+    // 5. JSON-Antwort zurückgeben
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "success",
+      "message": "Daten erfolgreich gesendet."
+    }))
+      .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
     // Fehler ins Log schreiben und einf Fehlermeldung ausgeben
     console.error(err);
-    return HtmlService.createHtmlOutput(
-      '<DOCTYPE html><html><body>' + 
-      '<h2>Fehler bei der Datenübertragung</h2>' +
-      '<p>' + err.message + '</p>' + 
-      '</body></html>'
-    );
+    return ContentService.createTextOutput(JSON.stringify({
+      "status": "error",
+      "message": err.message
+    }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
