@@ -26,7 +26,8 @@ function doPost(e) {
     var darkAnswers = data.darkAnswers || {};
 
     // 3. Tabelle öffnen
-    // TODO: Replace with your own Spreadsheet ID
+    // TODO: Replace with your own Spreadsheet ID here
+    // Spreadsheet ID für Studie aktuell: 1DCB-6I1zTGv9FV0dhtg2hJrwf277V6HFU587kPcEZXs
     var ss = SpreadsheetApp.openById("1DCB-6I1zTGv9FV0dhtg2hJrwf277V6HFU587kPcEZXs");
     var sheet = ss.getSheetByName("Studie_LM-DM_Daten");
 
@@ -93,3 +94,10 @@ function doGet(e) {
   return HtmlService.createHtmlOutput("<html><body><p>Diese Web-App erwartet POST-Anfragen von der Studie.</p></body></html>"
   );
 }
+
+// Information: 
+// Diese Google Apps Script Datei enthält die serverseitige Logik für die Datenerfassung
+// und wurde mit Hilfe von ChatGPT erstellt. Zum Debugging wurde zusätzlich Gemini
+// zur Hilfe genommen. Ebenfalls hatten wir auf den letzten Metern vor Veröffentlichung 
+// der Website Hilfe eines professionellen Entwicklers (Danke an dieser Stelle an 
+// Daniel Vollmer), der uns bei der finalen Fehlersuche unterstützt hat.

@@ -54,7 +54,6 @@ body {
 }
 
 
-
 /* ----------------------------- */
 /* Demo-Seite*/
 /* ----------------------------- */
@@ -179,7 +178,6 @@ td, th {
     font-size: 1rem;
 }
 
-
 /* ----------------------------- */
 /* Dark-Mode-Seite */
 /* ----------------------------- */
@@ -246,7 +244,7 @@ body.dark button {
 
 /* Aktiv im Dark Mode */
 body.dark button:enabled {
-    opacity: 1; /* Button ist voll sichtbar */
+    opacity: 1;         /* Button ist voll sichtbar */
     cursor: pointer;    /* Mauszeiger ändert sich */
     
 }
@@ -257,11 +255,11 @@ body.dark button:enabled:hover {
 
 
 
-
 /* ----------------------------- */
 /* Abschluss-Seite */
 /* ----------------------------- */
 
+/* bisher kein CSS nötig */
 
 
 /* ----------------------------- */
@@ -281,3 +279,9 @@ body.dark .imprint-footer {
     border-top: 1px solid #444;
     color: #aaa;
 }
+
+/* ----------------------------- */
+/* Hinweis zu dieser CSS-Datei: 
+Zur Deklaration der Nomenklatur sowie zur Implementierung von Effekten 
+wurde ChatGPT genutzt. */
+/* ----------------------------- */

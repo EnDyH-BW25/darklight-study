@@ -166,8 +166,6 @@ if (nextButtonLight) {
 }
 
 
-
-
 // ------------------------------------
 // dark.html - Zeit + Daten senden (Timer & Antworten später)
 // ------------------------------------
@@ -259,5 +257,6 @@ if (nextButtonDark) {
     });
 }
 
-
+// Hinweis: Zur Erstellung dieser JavaScript-Datei wurde ChatGPT verwendet.
+// Weiterhin wurde Google Gemini im Debugging-Prozess zur Hilfe genommen. 
 

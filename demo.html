@@ -9,7 +9,7 @@
         des Geräts: -->
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <!-- Zentrale CSS-Datei einbinden -->
+   <!-- Zentrale CSS-Datei -->
    <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -18,10 +18,10 @@
    <!-- Hauptcontainer für den Seiteninhalt -->
    <main class="page-container">
 
-      <!-- Überschrift der Seite -->
+      <!-- Seitenüberschrift -->
       <h1>Demografische Angaben</h1>
 
-      <!-- Kurze Erklärung zum Zweck der Fragen -->
+      <!-- Kurze Erklärung zum Zweck der demografischen Fragen -->
       <p>Bitte beantworten Sie die folgenden Fragen. Ihre Angaben werden anonym erhoben und ausschließlich für die
          Auswertung dieser Studie verwendet.<br>
          Damit wir die Ergebnisse korrekt auswerten können, ist ein vollständiges Bearbeiten aller Fragen
@@ -30,14 +30,14 @@
          sowie Brillen mit Blaulichtfilter abzunehmen.<br><br>
          Vielen herzlichen Dank!</p>
 
-      <!-- Formular, das alle Demografie-Eingaben enthält -->
+      <!-- Formular der Demografie-Fragen -->
       <form id="demoForm">
 
          <!-- 1. Geschlecht (Einfachauswahl) -->
          <section class="question-group">
             <h2>1. Mit welchem Geschlecht identifizieren Sie sich?</h2>
 
-            <!-- Radio-Buttons ermöglichen die Auswahl von nur einer Möglichkeit -->
+            <!-- Radio-Buttons für Einfachauswahl -->
             <label>
                <input type="radio" name="gender" value="male" required>
                Männlich
@@ -156,7 +156,7 @@
          <section class="question-group">
             <h2>6. Wie hoch ist Ihre tägliche Bildschirmzeit?</h2>
 
-            <!-- Kategorien als Radio-Buttons -->
+            <!-- Radio-Buttons für Einfachauswahl -->
             <label>
                <input type="radio" name="screenTime" value="0-2" required>
                Weniger als 2 Stunden
@@ -209,7 +209,7 @@
             </label><br>
          </section>
 
-         <!-- 8. Gerät, mit dem an der Umfrage teilgenommen wird (Einfachauswahl) -->
+         <!-- 8. Gerät, mit dem an der Umfrage teilgenommen wird -->
          <section class="question-group">
             <h2>8. Mit welchem Gerätetyp nehmen Sie an dieser Umfrage teil?</h2>
 
@@ -268,7 +268,7 @@
 
             <!-- Weiter-Button zur Light-Mode-Aufgabe -->
             <div class="button-container">
-               <!-- type="button, damit nicht automatisch abgeschickt wird" -->
+               <!-- type="button", damit nicht automatisch abgeschickt wird -->
                <button type="button" id="demoNextButton">
                   Weiter zur Aufgabe
                </button>
@@ -276,6 +276,7 @@
 
       </form>
 
+      <!-- Footer mit Impressum -->
       <footer class="imprint-footer">
          <p>
             <strong>Impressum:</strong><br><br>
